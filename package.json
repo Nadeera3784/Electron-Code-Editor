@@ -1,0 +1,35 @@
+{
+  "name": "code_editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "worker.js",
+  "dependencies": {
+    "accessibility-developer-tools": "^2.11.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "body-parser": "^1.18.3",
+    "nedb" : "^1.8.0",
+    "codemirror-widgets": "^1.4.2",
+    "conf": "^2.0.0",
+    "context-eval": "^1.0.1",
+    "devtron": "^1.4.0",
+    "directory-tree": "^2.1.0",
+    "electron": "^2.0.8",
+    "highlight.js": "^9.3.0",
+    "humanize-plus": "^1.8.2",
+    "katex": "^0.10.0",
+    "lodash": "^4.17.10",
+    "lodash.debounce": "^4.0.8",
+    "match-at": "^0.1.1",
+    "node-pty-prebuilt": "^0.7.3",
+    "nomnom": "^1.8.1",
+    "sqlite3": "^4.0.2",
+    "xterm": "^3.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "rebuild": "electron -f -w sqlite3"
+  },
+  "author": "R.Nadeera Sampath",
+  "license": "MIT"
+}

@@ -1,0 +1,81 @@
+.CodeMirror-advanced-dialog {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+	background: #2d2b55;
+    padding: 10px;
+	padding-left: 20px;
+	padding-right:20px;
+    overflow: hidden;
+	color: #5E5B89;
+    position: relative;
+    z-index: 15;
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.CodeMirror-advanced-dialog input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 20em;
+    color: inherit;
+	font-family: 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Monaco', Courier, monospace !important;
+}
+
+.CodeMirror-advanced-dialog button {
+    font-size: 70%;
+}
+
+.CodeMirror-advanced-dialog .row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.CodeMir3ror-advanced-dialog label {
+    flex: 0 0 100px;
+}
+
+.CodeMirror-advanced-dialog input[type="text"] {
+	font-size: 14px;
+	line-height: 1.42857;
+	transition: background 0s ease-out;
+	margin-bottom: -3px;
+}
+
+.CodeMirror-advanced-dialog input[type="text"]:focus{
+	background-image: linear-gradient(#5E5B89, #5E5B89), linear-gradient(#5E5B89, #5E5B89);
+	background-size: 0 2px, 100% 1px;
+	background-repeat: no-repeat;
+	background-position: center bottom, center calc(100% - 1px);
+	background-color: transparent;
+	transition: background 0s ease-out;
+	float: none;
+	box-shadow: none;
+	font-weight: 400;
+}
+
+.CodeMirror-search-hint {
+    display: block;
+    font-style: italic;
+    flex: 0 0 100%;
+}
+
+.buttons button {
+    margin: 0 5px;
+}
+
+.CodeMirror-console {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	background: #2d2b55;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right:20px;
+	overflow: hidden;
+	color: #5E5B89;
+	position: relative;
+	z-index: 15;
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}

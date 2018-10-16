@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/materialdesignicons.css">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
+	<link rel="stylesheet" href="CodeMirror/theme/lesser-dark.css">
+	<link rel="stylesheet" href="CodeMirror/addon/fold/foldgutter.css">
+	<link rel="stylesheet" href="CodeMirror/addon/dialog/dialog.css">
+	<link rel="stylesheet" href="CodeMirror/addon/hint/show-hint.css">
+	<link rel="stylesheet" href="CodeMirror/addon/search/advanced-dialog.css">
+	<link rel="stylesheet" href="CodeMirror/addon/search/matchesonscrollbar.css">
+	<link rel="stylesheet" href="css/editor.css">
+	<link rel="stylesheet" href="js/themes/default/style.css">
+	<link rel="stylesheet" href="node_modules/xterm/dist/xterm.css">
+</head>
+
+<body ng-app="myApp" ng-controller="MainController">
+	<div id="titlebar"></div>
+	<div class="main-view cw-toolbar-moved">
+		<div id="sidebar" class="sidebar panel  right-resizer collapsible">
+			<div id="project-files-container">
+				<div id="project-files-header">
+					<div id="project-dropdown-toggle" class="btn btn-block"><span id="project-title" class="title">Code_Editor</span> <span class="mdi mdi-chevron-down"></span></div>
+				</div>
+				<div class="working-file-list-container">
+					<js-tree tree-plugins="contextmenu,dnd,types" tree-types="typesConfig" tree-contextmenu="TreeContextMenu"  tree-events="select_node:nodeSelected"  tree-ajax="http://localhost:3000/api/tree" tree-core="tree_core"></js-tree>
+
+				</div>
+			</div>
+			<div id="main-toolbar" class="toolbar no-focus collapsible">
+				<div class="buttons">
+					<a id="settings" href="#"><i class="mdi mdi-settings"></i></a>
+					<a href="#" id="console"><i class="mdi mdi-console"></i></a>
+					<a href="#"><i class="mdi mdi-git"></i></a>
+					<a href="#"><i class="mdi mdi-github-box"></i></a>
+					<a href="#"><i class="mdi mdi-npm-variant-outline"></i></a>
+					<a href="#" id="responsive-view"><i class="mdi mdi-responsive"></i></a>
+					<a href="#" id="task"><i class="mdi mdi-clipboard-check"></i></a>
+					<a href="#"><i class="mdi mdi-bug"></i></a>
+					<a href="#" data-toggle="modal" data-target="#plugin"><i class="mdi mdi-receipt"></i></a>
+				</div>
+				<div class="bottom-buttons"></div>
+			</div>
+		</div>
+
+		<div class="content">
+			<div id="editor-holder">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#" id="tab1">untitled</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="default">
+						<div id="editor" context-menu="ContextMenu" context-menu-on="contextmenu"></div>
+						<!--beginning Of settings sidebar-->
+						<div id="right-sidebar" class="settings-panel">
+							<div class="settings-header">
+								<div class="clear-fix">
+									<button class="btn btn-close settings-close pull-left"><i class="mdi mdi-close"></i></button>
+									<span class="settings-panel-title pull-right">Settings</span>
+								</div>
+							</div>
+							<div class="settings-panel-container">
+								<form>
+									<div class="form-group">
+										<label for="exampleInputEmail1">Font Size</label>
+										<input type="text" class="form-control" value="15">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Themes</label>
+										<input type="text" class="form-control" value="Default">
+									</div>
+									<div class="form-group switch-btn">
+										<label>Word Wrap</label>
+										<switch class="pull-right wide" name="onOff" ng-model="wrap" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Line Number</label>
+										<switch class="pull-right wide" name="onOff" ng-model="line" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Auto Completion</label>
+										<switch class="pull-right wide" name="onOff" ng-model="hint" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Type Logger</label>
+										<switch class="pull-right wide" name="onOff" ng-model="logger" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Auto Indent</label>
+										<switch class="pull-right wide" name="onOff" ng-model="indent" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Hightlight Active Line</label>
+										<switch class="pull-right wide" name="onOff" ng-model="active_line" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Code Folding</label>
+										<switch class="pull-right wide" name="onOff" ng-model="fold" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Auto Close Brackets</label>
+										<switch class="pull-right wide" name="onOff" ng-model="x" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Config 02</label>
+										<switch class="pull-right wide" name="onOff" ng-model="a" on="On" off="Off"></switch>
+									</div>
+									<div class="form-group switch-btn">
+										<label>Config 03</label>
+										<switch class="pull-right wide" name="onOff" ng-model="b" on="On" off="Off"></switch>
+									</div>
+								</form>
+							</div>
+
+							<div class="btn-group btn-group-justified" role="group" aria-label="...">
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-info"> Save</button>
+								</div>
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-warning" id="settings-close-button"> Cancel</button>
+								</div>
+							</div>
+						</div>
+                       <!--End Of Settings sidebar-->
+                        <!--  Test Case Responsive design view-->
+						<div id="responsive-view-sidebar" class="settings-panel">
+							<div class="settings-header">
+								<div class="clear-fix">
+									<button class="btn btn-close settings-close pull-left"><i class="mdi mdi-close"></i></button>
+									<span class="settings-panel-title pull-right">Responsive Design View</span>
+								</div>
+							</div>
+							<div class="settings-panel-container">
+								<div class="iphone">
+									<div class="iphone-power-btn"></div>
+									<div class="iphone-left-btn"></div>
+									<div class="iphone-details"></div>
+									<div class="iphone-screen">
+										<div class="iphone-content"></div>  
+									</div>
+									<div class="iphone-home-btn"></div>
+								</div>
+							</div>
+
+							<div class="btn-group btn-group-justified" role="group" aria-label="...">
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-info"> Save</button>
+								</div>
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-warning" id="settings-close-button"> Cancel</button>
+								</div>
+							</div>
+						</div>
+						<!--End Of Test Case Responsive design view-->
+					</div>
+				</div>
+				<div id="status-bar">
+					<div id="status-info" class="info">
+						<div id="status-cursor"></div>
+						<div id="status-file"></div>
+					</div>
+					<div id="status-indicators" class="indicators">
+						<div id="status-language">
+							<button class="btn btn-dropdown btn-status-bar" id='LangMode'></button>
+						</div>
+						<div id="status-encoding">
+							<button class="btn btn-dropdown btn-status-bar" title="Select the encoding">UTF-8</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="plugin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<span class="modal-header-title">Plugin Manager</span>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<!--				<input class="form-control">-->
+					<div class="modal-body">
+						<div class="plugin-container">
+							<div class="row">
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status enable">
+											<a href="#">
+									<i class="mdi mdi-check-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Emmet</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Disable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status enable">
+											<a href="#">
+									<i class="mdi mdi-check-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Code hint</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Disable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status disabled">
+											<a href="#">
+									<i class="mdi mdi-close-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Js Debugger</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Enable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status enable">
+											<a href="#">
+									<i class="mdi mdi-check-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Git</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Enable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status disabled">
+											<a href="#">
+									<i class="mdi mdi-close-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Live Edit</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Enable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+									<div class="element-widget">
+										<div class="element-plugin-status disabled">
+											<a href="#">
+									<i class="mdi mdi-close-circle-outline mdi-48px"></i>
+								</a>
+										</div>
+										<div class="element-body">
+											<h3 class="element-pluginname">Color Picker</h3>
+											<div class="element-stats">
+												<div class="btn-group btn-group btn-group-justified">
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-bubbles"></i> Enable </a>
+													<a href="javascript:;" class="btn btn-native btn-sm">
+											<i class="icon-emoticon-smile"></i> Delete </a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="btn-group btn-group-justified" role="group" aria-label="...">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-info"><i class="fa fa-check-square-o"></i> Ok</button>
+							</div>
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		window.$ = window.jQuery = require('./js/jquery.js');
+
+	</script>
+	<script src="js/jstree.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="CodeMirror/lib/codemirror.js"></script>
+	<script src="CodeMirror/addon/search/searchcursor.js"></script>
+	<script src="CodeMirror/addon/dialog/dialog.js"></script>
+	<script src="CodeMirror/addon/edit/matchbrackets.js"></script>
+	<script src="CodeMirror/addon/edit/closebrackets.js"></script>
+	<script src="CodeMirror/addon/comment/comment.js"></script>
+	<script src="CodeMirror/addon/wrap/hardwrap.js"></script>
+	<script src="CodeMirror/addon/fold/foldcode.js"></script>
+	<script src="CodeMirror/mode/javascript/javascript.js"></script>
+	<script src="CodeMirror/addon/selection/active-line.js"></script>
+	<script src="CodeMirror/addon/fold/comment-fold.js"></script>
+	<script src="CodeMirror/addon/fold/brace-fold.js"></script>
+	<script src="CodeMirror/addon/fold/foldgutter.js"></script>
+	<script src="CodeMirror/addon/edit/matchtags.js"></script>
+	<script src="CodeMirror/addon/search/match-highlighter.js"></script>
+	<script src="CodeMirror/addon/hint/javascript-hint.js"></script>
+	<script src="CodeMirror/addon/hint/show-hint.js"></script>
+	<script src="CodeMirror/keymap/sublime.js"></script>
+	<script src="CodeMirror/addon/display/panel.js"></script>
+	<script src="CodeMirror/addon/search/advanced-dialog.js"></script>
+	<script src="CodeMirror/addon/search/revised-search.js"></script>
+	<script src="CodeMirror/addon/search/jump-to-line.js"></script>
+	<script src="CodeMirror/addon/search/matchesonscrollbar.js"></script>
+	<script src="CodeMirror/addon/custom/code-blast.js"></script>
+	<script src="CodeMirror/addon/custom/inlet.js"></script>
+	<script src="CodeMirror/addon/custom/emmet.js"></script>
+	<script src="CodeMirror/addon/custom/interactive-numbers.js"></script>
+	<script src="node_modules/lodash/lodash.min.js"></script>
+	<script src="CodeMirror/addon/custom/beautify/beautify.js"></script>
+	<script src="CodeMirror/addon/custom/beautify/beautify-css.js"></script>
+	<script src="CodeMirror/addon/custom/beautify/beautify-html.js"></script>
+	<script src="CodeMirror/addon/custom/beautify.js"></script>
+	<script src="CodeMirror/addon/custom/snippet.js"></script>
+	
+	<script src="js/angular.js"></script>
+	<script src="js/contextmenu.js"></script>
+	<script src="js/jsTree.directive.js"></script>
+	<script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+.cm-toolpanel-dialog {
+  padding: 10px;
+  overflow: hidden;
+  color: inherit;
+  border: 1px solid #efefef;
+  position: relative;
+  z-index: 10;
+  background-color: #ffffff;  
+}
